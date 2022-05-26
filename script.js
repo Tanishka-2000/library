@@ -73,6 +73,34 @@ function addBook(book){
     // append p to div.card
     card.appendChild(para);
 
+    // create div to hold buttons
+    let buttonGroup = document.createElement("div");
+    buttonGroup.className = "card-buttons";
+
+    // create button to change book read status
+    let status = book.readStatus.toLowerCase() === "read" ? "unread" : "read";
+    let changeButton = document.createElement("button");
+    changeButton.appendChild(document.createTextNode(status));
+    let icon = document.createElement("span");
+    icon.className = "material-symbols-outlined change";
+    icon.appendChild(document.createTextNode("cached"));
+    changeButton.appendChild(icon);
+    buttonGroup.appendChild(changeButton);
+
+
+    // create button to delete books
+    let deleteButton = document.createElement("button");
+    deleteButton.appendChild(document.createTextNode("Delete"));
+     icon = document.createElement("span");
+    icon.className = "material-symbols-outlined delete";
+    icon.appendChild(document.createTextNode("delete"))
+    deleteButton.appendChild(icon);
+
+    buttonGroup.appendChild(deleteButton);
+    // appending button to div.card
+    card.appendChild(buttonGroup);
+
+    // appending book to screen
     container.appendChild(card);
 }
 // function to return form to its initial state
