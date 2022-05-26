@@ -7,11 +7,24 @@ function Book(name, author, pages, readStatus){
     this.pages = pages
     this.readStatus = readStatus
 }
+//adding function to prototype
+Book.prototype.changeReadStatus = function(){
+    if(this.readStatus === "read"){
+        this.readStatus = "unread";
+    }else{
+        this.readStatus = "read";
+    }
+}
 
 // function to add a new book object to library
 function addBookToLibrary(){
+    resetForm();
     container.style.opacity = 1;
     form.style.display = "none";
+
+    //making new book object and adding to array
+    let book = new Book(title.value, author.value, pages.value, readStatus.value);
+    library.push(book);
 
     //after adding new book object to array
     addCard();
@@ -32,6 +45,13 @@ function deleteBook(){
 function addCard(){
 
 }
+// function to return form to its initial state
+function resetForm(){
+    title.value = "";
+    author.value = "";
+    pages.value = "";
+    readStatus.value = "";
+}
 
 // buttons
 let addButton = document.querySelector(".add-book");
@@ -49,3 +69,9 @@ for (let i = 0; i < cardDeleteButton.length; i++) {
 // divs
 let container = document.querySelector(".container");
 let form = document.querySelector("form");
+
+//inputs
+let title = document.querySelector("[name='title']");
+let author = document.querySelector("[name='author']");
+let pages = document.querySelector("[name='pages']");
+let readStatus = document.querySelector("[name='readStatus']");
