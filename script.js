@@ -18,16 +18,19 @@ Book.prototype.changeReadStatus = function(){
 
 // function to add a new book object to library
 function addBookToLibrary(){
-    resetForm();
+
+    // hide form and display books
     container.style.opacity = 1;
     form.style.display = "none";
 
     //making new book object and adding to array
     let book = new Book(title.value, author.value, pages.value, readStatus.value);
-    library.push(book);
+    myLibrary.push(book);
 
     //after adding new book object to array
-    addCard();
+    addBook(book);
+    // reseting value of inputs to null
+    resetForm();
 }
 
 // function to show up form
@@ -42,8 +45,35 @@ function deleteBook(){
 }
 
 // function to add new card to the library
-function addCard(){
+function addBook(book){
+    // create div with card class
+    let card = document.createElement("div");
+    card.className = "card";
+    // create h2 with book title as text
+    let heading = document.createElement("h2");
+    heading.appendChild(document.createTextNode(book.name));
+    // append h2 to div.card
+    card.appendChild(heading);
 
+    // create p with book author as text
+    let para = document.createElement("p");
+    para.appendChild(document.createTextNode(`by ${book.author}`));
+    // append p to div.card
+    card.appendChild(para);
+
+    // create p with book pages as text
+    para = document.createElement("p");
+    para.appendChild(document.createTextNode(`The book contains ${book.pages} pages`));
+    // append p to div.card
+    card.appendChild(para);
+
+    // create p with book read status as text
+    para = document.createElement("p");
+    para.appendChild(document.createTextNode(`Book ${book.readStatus}`));
+    // append p to div.card
+    card.appendChild(para);
+
+    container.appendChild(card);
 }
 // function to return form to its initial state
 function resetForm(){
