@@ -16,15 +16,19 @@
     </head>
     <body>
         <header>
-            <span class="material-symbols-outlined logo-icon">auto_stories</span>
-            <h1> Library</h1>
+            <div class="logo">
+                <span class="material-symbols-outlined logo-icon">auto_stories</span>
+                <h1> Library</h1>
+            </div>
+            <button type="button" name="button">Add Book <span class="material-symbols-outlined">add</span></button>
         </header>
         <div class="container">
-            <!-- <div class="card">
+            <div class="card">
                 <h2>The Hobbit</h2>
                 <p>by author name</p>
                 <p>page number</p>
                 <p>read status: read</p>
+                <button type="button">Delete <span class="material-symbols-outlined delete">delete</span></button>
             </div>
             <div class="card">
                 <h2>The Hobbit</h2>
@@ -67,9 +71,28 @@
                 <p>by author name</p>
                 <p>page number</p>
                 <p>read status: read</p>
-            </div> -->
+            </div>
         </div>
-
+        <form action="/" method="post">
+            <h1>Add the book <span class="material-symbols-outlined book">import_contacts</span></h1>
+            <div>
+                <input type="text" name="title" id="title" placeholder=" ">
+                <label for="title">Title</label>
+            </div>
+            <div>
+                <input type="text" name="author" id="author" placeholder=" ">
+                <label for="author">Author</label>
+            </div>
+            <div>
+                <input type="tel" name="pages" id="pages" placeholder=" ">
+                <label for="pages">No. of Pages</label>
+            </div>
+            <div>
+                <input type="text" name="readStatus" id="readStatus" placeholder=" ">
+                <label for="readStatus">Have you read the book</label>
+            </div>
+            <button type="button">Add <span class="material-symbols-outlined">add</span></button>
+        </form>
         <footer>@copyrigth 2022</footer>
     </body>
 </html>
