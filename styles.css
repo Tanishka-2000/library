@@ -23,7 +23,8 @@ header{
 /* header end */
 /* main start */
 .container{
-    margin: 80px 10%;
+    padding: 80px 10%;
+    min-height: 81.2vh;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     grid-gap: 5%;
@@ -39,12 +40,13 @@ header{
     box-shadow: 5px 5px 5px 5px #FAD4D4;
 }
 /* main end */
+/* footer start */
 footer{
     background-color: #F47C7C;
     color: #FFF2F2;
     text-align: center;
     width: 100%;
-    padding: 1%;
-    position: absolute;
-    bottom: 0;
+    padding: 7px;
+    margin-top: 20px;
 }
+/* footer iend */
