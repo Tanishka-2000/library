@@ -50,6 +50,17 @@ function deleteBook(e){
     container.removeChild(cards[pos]);
 }
 
+// function to change read status of book
+function changeStatus(e){
+    let button = e.target.getAttribute("data-position") ? e.target: e.target.parentElement;
+    let pos = button.getAttribute("data-position");
+
+    myLibrary[pos].changeReadStatus();
+    let cards = container.querySelectorAll(".card");
+    let paras = cards[pos].querySelectorAll("p");
+    paras[2].textContent = "Book: " + myLibrary[pos].readStatus;
+}
+
 // function to add new card to the library
 function addBook(book){
     // create div with card class
@@ -75,7 +86,7 @@ function addBook(book){
 
     // create p with book read status as text
     para = document.createElement("p");
-    para.appendChild(document.createTextNode(`Book ${book.readStatus}`));
+    para.appendChild(document.createTextNode(`Book: ${book.readStatus}`));
     // append p to div.card
     card.appendChild(para);
 
@@ -89,6 +100,8 @@ function addBook(book){
     icon.className = "material-symbols-outlined change";
     icon.appendChild(document.createTextNode("cached"));
     changeButton.appendChild(icon);
+    // adding event listener
+    changeButton.addEventListener("click",changeStatus);
     card.appendChild(changeButton);
 
     // create button to delete books
