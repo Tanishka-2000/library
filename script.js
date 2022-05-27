@@ -1,11 +1,12 @@
 
 let myLibrary = [];
 
-function Book(name, author, pages, readStatus){
+function Book(name, author, pages, readStatus, position){
     this.name = name
     this.author = author
     this.pages = pages
     this.readStatus = readStatus
+    this.position = position
 }
 //adding function to prototype
 Book.prototype.changeReadStatus = function(){
@@ -24,7 +25,7 @@ function addBookToLibrary(){
     form.style.display = "none";
 
     //making new book object and adding to array
-    let book = new Book(title.value, author.value, pages.value, readStatus.value);
+    let book = new Book(title.value, author.value, pages.value, readStatus.value, myLibrary.length);
     myLibrary.push(book);
 
     //after adding new book object to array
@@ -40,8 +41,13 @@ function showForm(){
 }
 
 // function to delete card and book object
-function deleteBook(){
+function deleteBook(e){
+    let button = e.target.getAttribute("data-position") ? e.target: e.target.parentElement;
+    let pos = button.getAttribute("data-position");
 
+    myLibrary.splice(pos, 1);
+    let cards = container.querySelectorAll(".card");
+    container.removeChild(cards[pos]);
 }
 
 // function to add new card to the library
@@ -73,32 +79,30 @@ function addBook(book){
     // append p to div.card
     card.appendChild(para);
 
-    // create div to hold buttons
-    let buttonGroup = document.createElement("div");
-    buttonGroup.className = "card-buttons";
 
     // create button to change book read status
-    let status = book.readStatus.toLowerCase() === "read" ? "unread" : "read";
     let changeButton = document.createElement("button");
-    changeButton.appendChild(document.createTextNode(status));
+    changeButton.setAttribute("data-position", book.position);
+    changeButton.className = "change-button";
+    changeButton.appendChild(document.createTextNode("Change read status"));
     let icon = document.createElement("span");
     icon.className = "material-symbols-outlined change";
     icon.appendChild(document.createTextNode("cached"));
     changeButton.appendChild(icon);
-    buttonGroup.appendChild(changeButton);
-
+    card.appendChild(changeButton);
 
     // create button to delete books
     let deleteButton = document.createElement("button");
+    deleteButton.setAttribute("data-position", book.position);
+    deleteButton.className = "del-button";
     deleteButton.appendChild(document.createTextNode("Delete"));
-     icon = document.createElement("span");
+    icon = document.createElement("span");
     icon.className = "material-symbols-outlined delete";
     icon.appendChild(document.createTextNode("delete"))
     deleteButton.appendChild(icon);
-
-    buttonGroup.appendChild(deleteButton);
-    // appending button to div.card
-    card.appendChild(buttonGroup);
+    // adding event listener
+    deleteButton.addEventListener("click", deleteBook);
+    card.appendChild(deleteButton);
 
     // appending book to screen
     container.appendChild(card);
@@ -114,7 +118,8 @@ function resetForm(){
 // buttons
 let addButton = document.querySelector(".add-book");
 let formSubmitButton = document.querySelector(".submit-form");
-let cardDeleteButton = document.querySelectorAll(".delete");
+let cardDeleteButton = document.querySelectorAll(".del-button");
+let changeStatusButton = document.querySelectorAll(".change-button");
 
 // adding event listeners to buttons
 addButton.addEventListener("click", showForm);
