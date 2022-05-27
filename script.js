@@ -10,11 +10,7 @@ function Book(name, author, pages, readStatus, position){
 }
 //adding function to prototype
 Book.prototype.changeReadStatus = function(){
-    if(this.readStatus === "read"){
-        this.readStatus = "unread";
-    }else{
-        this.readStatus = "read";
-    }
+    this.readStatus = !this.readStatus;
 }
 
 // function to add a new book object to library
@@ -25,7 +21,7 @@ function addBookToLibrary(){
     form.style.display = "none";
 
     //making new book object and adding to array
-    let book = new Book(title.value, author.value, pages.value, readStatus.value, myLibrary.length);
+    let book = new Book(title.value, author.value, pages.value, readStatus.checked, myLibrary.length);
     myLibrary.push(book);
 
     //after adding new book object to array
@@ -58,7 +54,8 @@ function changeStatus(e){
     myLibrary[pos].changeReadStatus();
     let cards = container.querySelectorAll(".card");
     let paras = cards[pos].querySelectorAll("p");
-    paras[2].textContent = "Book: " + myLibrary[pos].readStatus;
+    let rStatus = myLibrary[pos].readStatus ? "read" : "unread";
+    paras[2].textContent = "Book: " + rStatus;
 }
 
 // function to add new card to the library
@@ -85,8 +82,9 @@ function addBook(book){
     card.appendChild(para);
 
     // create p with book read status as text
+    let rStatus = book.readStatus ? "read" : "unread";
     para = document.createElement("p");
-    para.appendChild(document.createTextNode(`Book: ${book.readStatus}`));
+    para.appendChild(document.createTextNode(`Book: ${rStatus}`));
     // append p to div.card
     card.appendChild(para);
 
