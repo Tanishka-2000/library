@@ -1,16 +1,29 @@
 
 let myLibrary = [];
 
-function Book(name, author, pages, readStatus, position){
-    this.name = name
-    this.author = author
-    this.pages = pages
-    this.readStatus = readStatus
-    this.position = position
-}
-//adding function to prototype
-Book.prototype.changeReadStatus = function(){
-    this.readStatus = !this.readStatus;
+// function Book(name, author, pages, readStatus, position){
+//     this.name = name
+//     this.author = author
+//     this.pages = pages
+//     this.readStatus = readStatus
+//     this.position = position
+// }
+// //adding function to prototype
+// Book.prototype.changeReadStatus = function(){
+//     this.readStatus = !this.readStatus;
+// }
+// using classes instead of constructor function
+class Book{
+    constructor(name, author, pages, readStatus, position){
+        this.name = name;
+        this.author = author;
+        this.pages = pages;
+        this.readStatus = readStatus;
+        this.position = position;
+    }
+    changeReadStatus(){
+        this.readStatus = !this.readStatus;
+    }
 }
 
 // function to add a new book object to library
