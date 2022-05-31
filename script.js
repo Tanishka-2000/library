@@ -42,22 +42,30 @@ function showForm(){
 function deleteBook(e){
     let button = e.target.getAttribute("data-position") ? e.target: e.target.parentElement;
     let pos = button.getAttribute("data-position");
-
-    myLibrary.splice(pos, 1);
+    let libPos;
+    myLibrary.forEach((book, i) => {
+        if(book.position === pos) libPos = i;
+    });
+    myLibrary.splice(libPos, 1);
     let cards = container.querySelectorAll(".card");
-    container.removeChild(cards[pos]);
+    container.removeChild(button.parentElement);
 }
 
 // function to change read status of book
 function changeStatus(e){
     let button = e.target.getAttribute("data-position") ? e.target: e.target.parentElement;
     let pos = button.getAttribute("data-position");
+    let changedBook;
 
-    myLibrary[pos].changeReadStatus();
-    let cards = container.querySelectorAll(".card");
-    let paras = cards[pos].querySelectorAll("p");
-    let rStatus = myLibrary[pos].readStatus ? "read" : "unread";
-    paras[2].textContent = "Book: " + rStatus;
+    myLibrary.forEach(book => {
+        if(pos == book.position){
+            book.changeReadStatus();
+            changedBook = book;
+        }
+    });
+    let status = changedBook.readStatus ? 'read': 'unread';
+    button.previousElementSibling.textContent = 'Book: ' + status;
+
 }
 
 // function to add new card to the library
