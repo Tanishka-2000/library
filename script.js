@@ -1,17 +1,6 @@
 
 let myLibrary = [];
 
-// function Book(name, author, pages, readStatus, position){
-//     this.name = name
-//     this.author = author
-//     this.pages = pages
-//     this.readStatus = readStatus
-//     this.position = position
-// }
-// //adding function to prototype
-// Book.prototype.changeReadStatus = function(){
-//     this.readStatus = !this.readStatus;
-// }
 // using classes instead of constructor function
 class Book{
     constructor(name, author, pages, readStatus, position){
@@ -73,89 +62,45 @@ function changeStatus(e){
 
 // function to add new card to the library
 function addBook(book){
-    // create div with card class
-    let card = document.createElement("div");
-    card.className = "card";
-    // create h2 with book title as text
-    let heading = document.createElement("h2");
-    heading.appendChild(document.createTextNode(book.name));
-    // append h2 to div.card
-    card.appendChild(heading);
+    let newBook = template.content.cloneNode('true');
+    // heading
+    newBook.querySelector('h2').textContent = book.name;
+    // paragraphs
+    let paras = newBook.querySelectorAll('p');
+    paras[0].textContent = `by ${book.title}`;
+    paras[1].textContent = `contains ${book.pages} pages`;
+    let status = book.readStatus ? 'read' : 'unread';
+    paras[2].textContent = `Book: ${status}`;
+    // buttons
+    let btns = newBook.querySelectorAll('button');
+    btns[0].setAttribute('data-position', book.position);
+    btns[0].addEventListener('click',changeStatus);
 
-    // create p with book author as text
-    let para = document.createElement("p");
-    para.appendChild(document.createTextNode(`by ${book.author}`));
-    // append p to div.card
-    card.appendChild(para);
+    btns[1].setAttribute('data-position', book.position);
+    btns[1].addEventListener('click',deleteBook);
+    container.append(newBook);
 
-    // create p with book pages as text
-    para = document.createElement("p");
-    para.appendChild(document.createTextNode(`The book contains ${book.pages} pages`));
-    // append p to div.card
-    card.appendChild(para);
-
-    // create p with book read status as text
-    let rStatus = book.readStatus ? "read" : "unread";
-    para = document.createElement("p");
-    para.appendChild(document.createTextNode(`Book: ${rStatus}`));
-    // append p to div.card
-    card.appendChild(para);
-
-
-    // create button to change book read status
-    let changeButton = document.createElement("button");
-    changeButton.setAttribute("data-position", book.position);
-    changeButton.className = "change-button";
-    changeButton.appendChild(document.createTextNode("Change read status"));
-    let icon = document.createElement("span");
-    icon.className = "material-symbols-outlined change";
-    icon.appendChild(document.createTextNode("cached"));
-    changeButton.appendChild(icon);
-    // adding event listener
-    changeButton.addEventListener("click",changeStatus);
-    card.appendChild(changeButton);
-
-    // create button to delete books
-    let deleteButton = document.createElement("button");
-    deleteButton.setAttribute("data-position", book.position);
-    deleteButton.className = "del-button";
-    deleteButton.appendChild(document.createTextNode("Delete"));
-    icon = document.createElement("span");
-    icon.className = "material-symbols-outlined delete";
-    icon.appendChild(document.createTextNode("delete"))
-    deleteButton.appendChild(icon);
-    // adding event listener
-    deleteButton.addEventListener("click", deleteBook);
-    card.appendChild(deleteButton);
-
-    // appending book to screen
-    container.appendChild(card);
 }
 // function to return form to its initial state
 function resetForm(){
     title.value = "";
     author.value = "";
     pages.value = "";
-    readStatus.value = "";
+    readStatus.checked = false;
 }
 
 // buttons
 let addButton = document.querySelector(".add-book");
 let formSubmitButton = document.querySelector(".submit-form");
-let cardDeleteButton = document.querySelectorAll(".del-button");
-let changeStatusButton = document.querySelectorAll(".change-button");
 
 // adding event listeners to buttons
 addButton.addEventListener("click", showForm);
 formSubmitButton.addEventListener("click", addBookToLibrary);
 
-for (let i = 0; i < cardDeleteButton.length; i++) {
-    cardDeleteButton[i].addEventListener("click", deleteBook);
-}
-
 // divs
 let container = document.querySelector(".container");
 let form = document.querySelector("form");
+let template = document.querySelector("#book-template");
 
 //inputs
 let title = document.querySelector("[name='title']");
