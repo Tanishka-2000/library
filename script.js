@@ -15,21 +15,35 @@ class Book{
     }
 }
 
+function validateForm(){
+
+    if(!title.checkValidity()){
+        title.reportValidity();
+        return false;
+    }
+    if(!author.checkValidity()){
+        author.reportValidity();
+        return false;
+    }
+    if(!pages.checkValidity()){
+        pages.reportValidity();
+        return false;
+    }
+    return true;
+}
+
 // function to add a new book object to library
 function addBookToLibrary(){
+    if(validateForm()){
+        //making new book object and adding to array
+        let book = new Book(title.value, author.value, pages.value, readStatus.checked, myLibrary.length);
+        // clearing out screen
+        cancelForm();
+        myLibrary.push(book);
 
-    // hide form and display books
-    container.style.opacity = 1;
-    form.style.display = "none";
-
-    //making new book object and adding to array
-    let book = new Book(title.value, author.value, pages.value, readStatus.checked, myLibrary.length);
-    myLibrary.push(book);
-
-    //after adding new book object to array
-    addBook(book);
-    // reseting value of inputs to null
-    resetForm();
+        //after adding new book object to array
+        addBook(book);
+    }
 }
 
 // function to show up form
@@ -37,7 +51,23 @@ function showForm(){
     container.style.opacity = 0;
     form.style.display = "block";
 }
-
+// function to cancel form
+function cancelForm(){
+    hideForm();
+    resetForm();
+}
+// function to hide form
+function hideForm(){
+    container.style.opacity = 1;
+    form.style.display = "none";
+}
+// function to return form to its initial state
+function resetForm(){
+    title.value = "";
+    author.value = "";
+    pages.value = "";
+    readStatus.checked = false;
+}
 // function to delete card and book object
 function deleteBook(e){
     let button = e.target.getAttribute("data-position") ? e.target: e.target.parentElement;
@@ -75,7 +105,7 @@ function addBook(book){
     newBook.querySelector('h2').textContent = book.name;
     // paragraphs
     let paras = newBook.querySelectorAll('p');
-    paras[0].textContent = `by ${book.title}`;
+    paras[0].textContent = `by ${book.author}`;
     paras[1].textContent = `contains ${book.pages} pages`;
     let status = book.readStatus ? 'read' : 'unread';
     paras[2].textContent = `Book: ${status}`;
@@ -89,21 +119,16 @@ function addBook(book){
     container.append(newBook);
 
 }
-// function to return form to its initial state
-function resetForm(){
-    title.value = "";
-    author.value = "";
-    pages.value = "";
-    readStatus.checked = false;
-}
 
 // buttons
 let addButton = document.querySelector(".add-book");
 let formSubmitButton = document.querySelector(".submit-form");
+let formCancelButton = document.querySelector(".cancel-form");
 
 // adding event listeners to buttons
 addButton.addEventListener("click", showForm);
 formSubmitButton.addEventListener("click", addBookToLibrary);
+formCancelButton.addEventListener("click", cancelForm);
 
 // divs
 let container = document.querySelector(".container");

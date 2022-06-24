@@ -23,7 +23,7 @@
             <button type="button" class="add-book">Add Book <span class="material-symbols-outlined">add</span></button>
         </header>
         <div class="container">
-            
+
             <template id="book-template">
                 <div class="card">
                        <h2>The Hobbit</h2>
@@ -39,22 +39,25 @@
         <form action="/" method="post">
             <h1>Add the book <span class="material-symbols-outlined book">import_contacts</span></h1>
             <div>
-                <input type="text" name="title" id="title" placeholder=" ">
+                <input type="text" name="title" id="title" placeholder=" " required>
                 <label for="title">Title</label>
             </div>
             <div>
-                <input type="text" name="author" id="author" placeholder=" ">
+                <input type="text" name="author" id="author" placeholder=" " required>
                 <label for="author">Author</label>
             </div>
             <div>
-                <input type="tel" name="pages" id="pages" placeholder=" ">
+                <input type="tel" name="pages" id="pages" placeholder=" " required>
                 <label for="pages">No. of Pages</label>
             </div>
             <div>
                 <input type="checkbox" name="readStatus" id="readStatus" placeholder=" ">
                 <label for="readStatus">Have you read the book? (Read/Unread)</label>
             </div>
-            <button type="button" class="submit-form">Add <span class="material-symbols-outlined">add</span></button>
+            <div class="btn-group">
+                <button type="button" class="submit-form">Add <span class="material-symbols-outlined">add</span></button>
+                <button type="button" class="cancel-form">Cancel <span class="material-symbols-outlined">block</span></button>
+            </div>
         </form>
         <footer>@copyrigth 2022</footer>
     </body>
